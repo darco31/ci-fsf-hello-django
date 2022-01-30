@@ -18,7 +18,11 @@
             <td><strike>{{ item.name }}</strike></td>
             {% else %}
             <td>{{ itam.name }}</td>
-            {% endif %}
+            {% empty %}
+        <tr>
+            <td>You have nothing to do</td>
+        </tr>
+        {% endif %}
         </tr>
         {% endfor %}
     </table>
