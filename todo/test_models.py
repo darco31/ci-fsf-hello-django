@@ -1,22 +1,15 @@
 from django.test import TestCase
-from .forms import ItemForm
-
-# Create your tests here.
-
-class TestItemForm(TestCase):
-
-    def test_item_name_is_required(self):
-        form = ItemForm({'name': ''})
-        self.assertFalse(form.is_valid())
-        self.assertIn('name', form.errors.keys())
-        self.assertEqual(form.errors['name'][0], 'This field is required.')
+from .models import Item
 
 
-    def test_done_field_is_not_required(self):
-        form = ItemForm({'name': 'Test Todo Item'})
-        self.assertTrue(form.is_valid())
+class TestModels(TestCase):
+    """test models"""
 
+    def test_defaults_to_false(self):
+        item = Item.objects.create(name="Test Item")
+        self.assertFalse(item.done)
 
-    def test_fields_are_explicit_in_form_meta_class(self):
-        form = ItemForm()
-        self.assertEqual(form.Meta.fields, ['name', 'done'])
+    
+    def test_item_string_method_returns_name(self):
+        item = Item.objects.create(name="Test todo item")
+        self.assertEqual(str(item), "Test todo item")

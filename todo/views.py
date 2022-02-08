@@ -6,7 +6,7 @@ from .forms import ItemForm
 
 def get_todo_list(request):
     """
-    pass
+    Render todo list
     """
     items = Item.objects.all()
     context = {
@@ -17,7 +17,7 @@ def get_todo_list(request):
 
 def add_item(request):
     """
-    pass
+    Render add item list
     """
     if request.method == 'POST':
         form = ItemForm(request.POST)
@@ -33,15 +33,13 @@ def add_item(request):
 
 
 def edit_item(request, item_id):
-    """
-    pass
-    """
+    """render edit item"""
     item = get_object_or_404(Item, id=item_id)
     if request.method == 'POST':
         form = ItemForm(request.POST, instance=item)
         if form.is_valid():
             form.save()
-            return redirect('get_todo_list')
+        return redirect('get_todo_list')
 
     form = ItemForm(instance=item)
     context = {
@@ -51,9 +49,7 @@ def edit_item(request, item_id):
 
 
 def toggle_item(request, item_id):
-    """
-    Toggles items in the task list
-    """
+    """toggle done status"""
     item = get_object_or_404(Item, id=item_id)
     item.done = not item.done
     item.save()
